@@ -19,15 +19,15 @@ main(int ac, char *av[])
 
 	if (ac != 2) //DBROOKS - added
 	{
-		std::cout << "Wanring: you did not pass a server IP, terminating...";
-		exit();
+		printf("Wanring: you did not pass a server IP, terminating...")
+		exit(-1);
 	};
 
      /*
       * Step 1: Get a socket
       */
 
-	 std::cout << "\t IP passed: " << av[1] << std::endl; //DBROOKS - added
+	 printf("IP passed: ", av[1], "\n"); //DBROOKS - added
 
 	sock_id = socket( AF_INET, SOCK_STREAM, 0 );    /* get a line   */
 	if ( sock_id == -1 ) 
