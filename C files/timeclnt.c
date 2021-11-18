@@ -27,7 +27,7 @@ main(int ac, char *av[])
       * Step 1: Get a socket
       */
 
-	 printf("%sIP passed: ", av[1], "%c\n"); //DBROOKS - added
+	 printf("%sIP passed: ", av[1], "%s\n"); //DBROOKS - added
 
 	sock_id = socket( AF_INET, SOCK_STREAM, 0 );    /* get a line   */
 	if ( sock_id == -1 ) 
