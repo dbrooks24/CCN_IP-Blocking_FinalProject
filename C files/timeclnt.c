@@ -55,6 +55,7 @@ int main(int ac, char *av[])
 						       /* now dial     */
 	if ( connect(sock_id,(struct sockaddr *)&servadd, sizeof(servadd)) !=0)
 	       oops( "connect" );
+		   
 	printf("Step 2 ended...\n\n"); //DBROOKS - added
 
 
