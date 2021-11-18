@@ -23,9 +23,9 @@ int main(int ac, char *av[])
 		exit(-1);
 	}
 
-     /*
-      * Step 1: Get a socket
-      */
+	/*
+	* Step 1: Get a socket
+	*/
 	printf("Step 1 started...\n"); //DBROOKS - added
 	
 		printf("IP that was passed: %s\n", av[1]); //DBROOKS - added
