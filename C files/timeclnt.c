@@ -48,7 +48,7 @@ int main(int ac, char *av[])
 		oops(av[1]);            	/* or die               */
 	bcopy(hp->h_addr, (struct sockaddr *)&servadd.sin_addr, hp->h_length);
 
-	servadd.sin_port = htons(atoi(av[2]));  /* fill in port number  */
+	servadd.sin_port = htons(atoi(av[1]));  /* fill in port number  */ // DBROOKS - changed 'av[2]' to av[1], as seg fault was present
 
 	servadd.sin_family = AF_INET ;          /* fill in socket type  */
 
