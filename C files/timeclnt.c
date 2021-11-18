@@ -19,7 +19,7 @@ main(int ac, char *av[])
 
 	if (ac != 2) //DBROOKS - added
 	{
-		printf("Wanring: you did not pass a server IP, terminating...");
+		printf("Wanring: you did not pass a server IP, terminating...\n");
 		exit(-1);
 	};
 
