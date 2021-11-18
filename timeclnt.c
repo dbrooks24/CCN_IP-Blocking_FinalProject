@@ -3,6 +3,7 @@
  */
 #include       <stdio.h>
 #include       <sys/types.h>
+#include	   <cassert>
 #include       <sys/socket.h>
 #include       <netinet/in.h>
 #include       <netdb.h>
@@ -17,9 +18,16 @@ main(int ac, char *av[])
 	char   message[BUFSIZ];             /* to receive message */
 	int    messlen;                     /* for message length */
 
+	assert(ac == 2) //DBROOKS - added
+	{
+		std::cout << "Wanring: you did not pass a server IP, terminating...";
+	}
+
      /*
       * Step 1: Get a socket
       */
+
+	 std::cout << "\t IP passed: " << av[1] << std::endl; //DBROOKS - added
 
 	sock_id = socket( AF_INET, SOCK_STREAM, 0 );    /* get a line   */
 	if ( sock_id == -1 ) 
