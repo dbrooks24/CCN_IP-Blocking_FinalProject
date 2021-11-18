@@ -19,7 +19,7 @@ main(int ac, char *av[])
 
 	if (ac != 2) //DBROOKS - added
 	{
-		printf("Wanring: you did not pass a server IP, terminating...")
+		printf("Wanring: you did not pass a server IP, terminating...");
 		exit(-1);
 	};
 
@@ -27,7 +27,7 @@ main(int ac, char *av[])
       * Step 1: Get a socket
       */
 
-	 printf("IP passed: ", av[1], "\n"); //DBROOKS - added
+	 printf("%sIP passed: ", *av[1], "\n"); //DBROOKS - added
 
 	sock_id = socket( AF_INET, SOCK_STREAM, 0 );    /* get a line   */
 	if ( sock_id == -1 ) 
