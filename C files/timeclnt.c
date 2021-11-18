@@ -9,7 +9,7 @@
 
 #define        oops(msg)       { perror(msg); exit(1); }
 
-main(int ac, char *av[])
+int main(int ac, char *av[])
 {
 	struct sockaddr_in  servadd;        /* the number to call */
 	struct hostent      *hp;            /* used to get number */
@@ -21,19 +21,21 @@ main(int ac, char *av[])
 	{
 		printf("Wanring: you did not pass a server IP, terminating...\n");
 		exit(-1);
-	};
+	}
 
      /*
       * Step 1: Get a socket
       */
+	printf("Step 1 started...\n"); //DBROOKS - added
 	
-	printf("Here!\n");
-	printf("%sIP passed: \n", av[1]); //DBROOKS - added
+	printf("IP passed: %s\n", av[1]); //DBROOKS - added
 
 	sock_id = socket( AF_INET, SOCK_STREAM, 0 );    /* get a line   */
 	if ( sock_id == -1 ) 
 		oops( "socket" );          		/* or fail      */
+	printf("Step 1 ended...\n\n"); //DBROOKS - added
 
+	printf("Step 2 started...\n"); //DBROOKS - added
      /*
       * Step 2: connect to server
       *         need to build address (host,port) of server  first
@@ -53,15 +55,20 @@ main(int ac, char *av[])
 						       /* now dial     */
 	if ( connect(sock_id,(struct sockaddr *)&servadd, sizeof(servadd)) !=0)
 	       oops( "connect" );
+	printf("Step 2 ended...\n\n"); //DBROOKS - added
+
 
      /*
       * Step 3: transfer data from server, then hangup
       */
+	printf("Step 3 started...\n"); //DBROOKS - added
 
 	messlen = read(sock_id, message, BUFSIZ);     /* read stuff   */
 	if ( messlen == - 1 )
 	       oops("read") ;
 	if ( write( 1, message, messlen ) != messlen )  /* and write to */
 	       oops( "write" );                        /* stdout       */
-	close( sock_id );    
+	close( sock_id );
+
+	printf("Step 3 ended, closed socket...\n"); //DBROOKS - added
 }
