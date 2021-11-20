@@ -17,6 +17,8 @@
 int main(int ac, char *av[])
 {
 	struct  sockaddr_in   saddr;   /* build our address here */
+	char sockAddrBuffer[INET_ADDSTRLEN]; // - added by DBrooks
+	
 	struct	hostent		*hp;   /* this is part of our    */
 	char	hostname[HOSTLEN];     /* address 	         */
 	int	sock_id,sock_fd;       /* line id, file desc     */
@@ -24,40 +26,52 @@ int main(int ac, char *av[])
 	char    *ctime();              /* convert secs to string */
 	time_t  thetime;               /* the time we report     */
 
-      /*
-       * Step 1: ask kernel for a socket
-       */
+	/*
+	* Step 1: ask kernel for a socket
+	*/
+	printf("Step 1 started...\n"); // - added by DBrooks
+		sock_id = socket( PF_INET, SOCK_STREAM, 0 );    /* get a socket */
+		if ( sock_id == -1 ) 
+			oops( "socket" );
+		printf("Socket reserved: %i", sock_id);	// - added by DBrooks
+	printf("Step 1 ended...\n"); // - added by DBrooks
 
-	sock_id = socket( PF_INET, SOCK_STREAM, 0 );    /* get a socket */
-	if ( sock_id == -1 ) 
-		oops( "socket" );
 
-      /*
-       * Step 2: bind address to socket.  Address is host,port
-       */
+	/*
+	* Step 2: bind address to socket.  Address is host,port
+	*/
+	printf("Step 2 started...\n"); // - added by DBrooks
+		bzero( (void *)&saddr, sizeof(saddr) ); /* clear out struct     */
 
-	bzero( (void *)&saddr, sizeof(saddr) ); /* clear out struct     */
+		gethostname( hostname, HOSTLEN );       /* where am I ?         */
+		hp = gethostbyname( hostname );         /* get info about host  */
+		
+		/* fill in host part    */
+			bcopy( (void *)hp->h_addr, (void *)&saddr.sin_addr, hp->h_length);
+			saddr.sin_port = htons(PORTNUM);        /* fill in socket port  */
+			saddr.sin_family = AF_INET ;            /* fill in addr family  */
+	
+		/*print out sockaddr(saddr) - added by DBrooks*/
+			inet_nstop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer)); // - added by DBrooks	
 
-	gethostname( hostname, HOSTLEN );       /* where am I ?         */
-	hp = gethostbyname( hostname );         /* get info about host  */
-	                                        /* fill in host part    */
-	bcopy( (void *)hp->h_addr, (void *)&saddr.sin_addr, hp->h_length);
-	saddr.sin_port = htons(PORTNUM);        /* fill in socket port  */
-	saddr.sin_family = AF_INET ;            /* fill in addr family  */
+		if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
+	    	   oops( "bind" );
+		printf("socket bounded, assigned name to socket using sys call"); // - added by DBrooks
+	printf("Step 2 ended...\n"); // - added by DBrooks
 
-	if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
-	       oops( "bind" );
+    
+	/*
+	* Step 3: allow incoming calls with Qsize=1 on socket
+	*/
+	printf("Step 3 started...\n"); // - added by DBrooks
+		if ( listen(sock_id, 1) != 0 ) 
+			oops( "listen" );
+	printf("Step 3 ended...\n"); // - added by DBrooks
 
-      /*
-       * Step 3: allow incoming calls with Qsize=1 on socket
-       */
-
-	if ( listen(sock_id, 1) != 0 ) 
-		oops( "listen" );
-
-      /*
-       * main loop: accept(), write(), close()
-       */
+	/*
+	* main loop: accept(), write(), close()
+	*/
+	printf("Server is now listening on socket "); // - added by DBrooks
 
 	while ( 1 ){
 	       sock_fd = accept(sock_id, NULL, NULL); /* wait for call */
