@@ -17,6 +17,9 @@ int main(int ac, char *av[])
 	char   message[BUFSIZ];             /* to receive message */
 	int    messlen;                     /* for message length */
 
+
+	printf("\nClient code for timerServer C.N.N. Project:\n");
+
 	if (ac != 3) //DBROOKS - added
 	{
 		printf("Wanring: you did not pass a server IP and server port, please run with [IP, PortAddr]. Terminating...\n");
@@ -26,7 +29,7 @@ int main(int ac, char *av[])
 	/*
 	* Step 1: Get a socket
 	*/
-	printf("Step 1 started...\n"); //DBROOKS - added
+	printf("Step 1 started...asking kernel for socket.\n"); //DBROOKS - added
 	
 		printf("IP that was passed: %s\n", av[1]); //DBROOKS - added
 
@@ -42,7 +45,7 @@ int main(int ac, char *av[])
 	* Step 2: connect to server
 	*         need to build address (host,port) of server  first
 	*/
-	printf("Step 2 started...\n"); //DBROOKS - added
+	printf("Step 2 started...parse server info passed.\n"); //DBROOKS - added
 		
 		bzero( &servadd, sizeof( servadd ) );   /* zero the address     */
 
@@ -54,18 +57,20 @@ int main(int ac, char *av[])
 		servadd.sin_port = htons(atoi(av[2]));  /* fill in port number  */ 
 
 		servadd.sin_family = AF_INET ;          /* fill in socket type  */
-
-		/* now dial     */
+	printf("Step 2 ended...\n\n"); //DBROOKS - added
+		
+	printf("dialing server...\n");
+		/* now dial */
 		if ( connect(sock_id,(struct sockaddr *)&servadd, sizeof(servadd)) !=0)
 	       oops( "connect" );
 
-	printf("Step 2 ended...\n\n"); //DBROOKS - added
+	
 
 
 	/*
 	* Step 3: transfer data from server, then hangup
 	*/
-	printf("Step 3 started...\n"); //DBROOKS - added
+	printf("Step 3 started...Read data sent from server.\n"); //DBROOKS - added
 
 		messlen = read(sock_id, message, BUFSIZ);     /* read stuff   */
 		if ( messlen == - 1 )
@@ -74,5 +79,5 @@ int main(int ac, char *av[])
 	       	oops( "write" );                        /* stdout       */
 		close( sock_id );
 
-	printf("Step 3 ended, closed socket...\n"); //DBROOKS - added
+	printf("Step 3 ended, closed socket/connection...\n"); //DBROOKS - added
 }

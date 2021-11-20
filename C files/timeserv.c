@@ -32,13 +32,13 @@ int main(int ac, char *av[])
 	time_t  thetime;               /* the time we report     */
 
 	
-	printf("\nTime Server starting up...\n"); // - Added by DBrooks
+	printf("\nServer code for timerServer C.N.N. Project:\n");
 
 
 	/*
 	* Step 1: ask kernel for a socket
 	*/
-	printf("Step 1 started...\n"); // - added by DBrooks
+	printf("Step 1 started...asking kernel for socket.\n"); // - added by DBrooks
 		sock_id = socket( PF_INET, SOCK_STREAM, 0 );    /* get a socket */
 		if ( sock_id == -1 ) 
 			oops( "socket" );
@@ -49,7 +49,7 @@ int main(int ac, char *av[])
 	/*
 	* Step 2: bind address to socket.  Address is host,port
 	*/
-	printf("Step 2 started...\n"); // - added by DBrooks
+	printf("Step 2 started...binding socket to PID port Addr.\n"); // - added by DBrooks
 		bzero( (void *)&saddr, sizeof(saddr) ); /* clear out struct     */
 
 		gethostname( hostname, HOSTLEN );       /* where am I ?         */
@@ -68,7 +68,7 @@ int main(int ac, char *av[])
 	/*
 	* Step 3: allow incoming calls with Qsize=1 on socket
 	*/
-	printf("Step 3 started...\n"); // - added by DBrooks
+	printf("Step 3 started...assign LISTENING status to port.\n"); // - added by DBrooks
 		if ( listen(sock_id, 1) != 0 ) 
 			oops( "listen" );
 	printf("Step 3 ended...\n\n"); // - added by DBrooks
