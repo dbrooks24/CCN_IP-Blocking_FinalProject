@@ -38,7 +38,7 @@ int main(int ac, char *av[])
 		sock_id = socket( PF_INET, SOCK_STREAM, 0 );    /* get a socket */
 		if ( sock_id == -1 ) 
 			oops( "socket" );
-		printf("Socket reserved: %i", sock_id);	// - added by DBrooks
+		printf("Socket reserved: %i\n", sock_id);	// - added by DBrooks
 	printf("Step 1 ended...\n"); // - added by DBrooks
 
 
@@ -57,12 +57,12 @@ int main(int ac, char *av[])
 			saddr.sin_family = AF_INET ;            /* fill in addr family  */
 	
 		/*print out sockaddr(saddr) - added by DBrooks*/
-			inet_ntop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer)); // - added by DBrooks	
-			printf("Socket info %s",sockAddrBuffer);
+			inet_ntop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer));
+			printf("Socket info %s\n",sockAddrBuffer);
 
 		if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
 	    	   oops( "bind" );
-		printf("socket bounded, assigned name to socket using sys call\n"); // - added by DBrooks
+		printf("socket binded, assigned name to socket using sys call\n"); // - added by DBrooks
 	printf("Step 2 ended...\n"); // - added by DBrooks
 
     
@@ -77,7 +77,7 @@ int main(int ac, char *av[])
 	/*
 	* main loop: accept(), write(), close()
 	*/
-	printf("Server is now listening on socket "); // - added by DBrooks
+	printf("\tServer is now listening on socket...\n"); // - added by DBrooks
 
 	while ( 1 ){
 	       sock_fd = accept(sock_id, NULL, NULL); /* wait for call */
