@@ -19,7 +19,7 @@
 #define   HOSTLEN  256
 #define   oops(msg)      { perror(msg) ; exit(1) ; }
 
-void printIP(struct sockaddr_in *SockStruct); // helper function to print server address and port - Added by DBrooks
+void printIP(struct sockaddr_in &SockStruct); // helper function to print server address and port - Added by DBrooks
 
 int main(int ac, char *av[])
 {
