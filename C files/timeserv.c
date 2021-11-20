@@ -38,6 +38,7 @@ int main(int ac, char *av[])
 		sock_id = socket( PF_INET, SOCK_STREAM, 0 );    /* get a socket */
 		if ( sock_id == -1 ) 
 			oops( "socket" );
+		printf("\tsocket access was given by kernel...\n");
 	printf("Step 1 ended...\n\n"); // - added by DBrooks
 
 
@@ -62,7 +63,7 @@ int main(int ac, char *av[])
 
 		if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
 	    	   oops( "bind" );
-		printf("socket binded, assigned name to socket using sys call\n"); // - added by DBrooks
+		printf("\tsocket bounded with port, assigned name to socket using sys call\n"); // - added by DBrooks
 	printf("Step 2 ended...\n\n"); // - added by DBrooks
 
     
