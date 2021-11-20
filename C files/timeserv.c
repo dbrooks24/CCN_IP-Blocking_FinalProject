@@ -58,10 +58,11 @@ int main(int ac, char *av[])
 	
 		/*print out sockaddr(saddr) - added by DBrooks*/
 			inet_ntop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer)); // - added by DBrooks	
+			printf("Socket info %s",sockAddrBuffer);
 
 		if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
 	    	   oops( "bind" );
-		printf("socket bounded, assigned name to socket using sys call"); // - added by DBrooks
+		printf("socket bounded, assigned name to socket using sys call\n"); // - added by DBrooks
 	printf("Step 2 ended...\n"); // - added by DBrooks
 
     
