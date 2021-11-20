@@ -13,7 +13,7 @@
 #define _OPEN_SYS_SOCK_IPV6
 #include <arpa/inet.h>
 
-const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
+
 
 #define   PORTNUM  13000   /* our time service phone number */
 #define   HOSTLEN  256
@@ -57,7 +57,7 @@ int main(int ac, char *av[])
 			saddr.sin_family = AF_INET ;            /* fill in addr family  */
 	
 		/*print out sockaddr(saddr) - added by DBrooks*/
-			inet_nstop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer)); // - added by DBrooks	
+			inet_ntop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer)); // - added by DBrooks	
 
 		if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
 	    	   oops( "bind" );
