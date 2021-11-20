@@ -77,22 +77,23 @@ int main(int ac, char *av[])
 	/*
 	* main loop: accept(), write(), close()
 	*/
-	printf("\tServer is now listening on socket...\n"); // - added by DBrooks
+	printf("Server is now listening on socket...\n"); // - added by DBrooks
 
-	while ( 1 ){
-	       sock_fd = accept(sock_id, NULL, NULL); /* wait for call */
+	while ( 1 )
+	{
+	    sock_fd = accept(sock_id, NULL, NULL); /* wait for call */
 		printf("Wow! got a call!\n");
-	       if ( sock_fd == -1 )
-		       oops( "accept" );       /* error getting calls  */
+		if ( sock_fd == -1 )
+			oops( "accept" );       /* error getting calls  */
 
-	       sock_fp = fdopen(sock_fd,"w");  /* we'll write to the   */
+		sock_fp = fdopen(sock_fd,"w");  /* we'll write to the   */
 	       if ( sock_fp == NULL )          /* socket as a stream   */
-		       oops( "fdopen" );       /* unless we can't      */
+			oops( "fdopen" );       /* unless we can't      */
 
-	       thetime = time(NULL);           /* get time             */
-					       /* and convert to strng */
+		thetime = time(NULL);           /* get time             */
+			/* and convert to strng */
 	       fprintf( sock_fp, "The time here is .." );
 	       fprintf( sock_fp, "%s", ctime(&thetime) ); 
-	       fclose( sock_fp );              /* release connection   */
+		fclose( sock_fp );              /* release connection   */
 	}
 }
