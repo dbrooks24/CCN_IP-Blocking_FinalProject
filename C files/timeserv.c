@@ -9,6 +9,7 @@
 #include  <netdb.h>
 #include  <time.h>
 #include  <strings.h>
+#include <arpa/inet.h> // - added by DBrooks
 
 #define   PORTNUM  13000   /* our time service phone number */
 #define   HOSTLEN  256
