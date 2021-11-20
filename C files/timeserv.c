@@ -19,11 +19,11 @@
 #define   HOSTLEN  256
 #define   oops(msg)      { perror(msg) ; exit(1) ; }
 
+void printIP(struct sockaddr_in *SockStruct); // helper function to print server address and port - Added by DBrooks
+
 int main(int ac, char *av[])
 {
-	struct  sockaddr_in   saddr;   /* build our address here */
-	char sockAddrBuffer[INET_ADDRSTRLEN]; // - added by DBrooks
-	
+	struct  sockaddr_in   saddr;   /* build our address here */	
 	struct	hostent		*hp;   /* this is part of our    */
 	char	hostname[HOSTLEN];     /* address 	         */
 	int	sock_id,sock_fd;       /* line id, file desc     */
@@ -55,12 +55,6 @@ int main(int ac, char *av[])
 			bcopy( (void *)hp->h_addr, (void *)&saddr.sin_addr, hp->h_length);
 			saddr.sin_port = htons(PORTNUM);        /* fill in socket port  */
 			saddr.sin_family = AF_INET ;            /* fill in addr family  */
-	
-		/*print out sockaddr(saddr) - added by DBrooks*/
-			inet_ntop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer));
-			printf("\tIP info %s",sockAddrBuffer);
-			printf("\n");
-
 		if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
 	    	   oops( "bind" );
 		printf("\tsocket bounded with port, assigned name to socket using sys call\n"); // - added by DBrooks
@@ -75,6 +69,9 @@ int main(int ac, char *av[])
 			oops( "listen" );
 	printf("Step 3 ended...\n"); // - added by DBrooks
 	printf("\tServer is now listening on socket...\n"); // - added by DBrooks
+
+	printIP(saddr); //print host info using helper function - added by DBrooks
+	
 
 	/*
 	* main loop: accept(), write(), close()
@@ -97,4 +94,15 @@ int main(int ac, char *av[])
 	       fprintf( sock_fp, "%s", ctime(&thetime) ); 
 		fclose( sock_fp );              /* release connection   */
 	}
-}
+};
+
+
+void printIP(struct sockaddr_in *SockStruct) //def of print function - Added by DBrooks
+{
+	char IPAddrBuffer[INET_ADDRSTRLEN];
+	inet_ntop(AF_INET, &SockStruct.sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
+		
+	uint16_t port = htons(SockStruct->sin_port);
+
+	printf("SERVER INFO: %s:%d\n\n",IPAddrBuffer,port);
+};
