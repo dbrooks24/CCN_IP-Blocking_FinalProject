@@ -9,7 +9,11 @@
 #include  <netdb.h>
 #include  <time.h>
 #include  <strings.h>
-#include <arpa/inet.h> // - added by DBrooks
+
+#define _OPEN_SYS_SOCK_IPV6
+#include <arpa/inet.h>
+
+const char *inet_ntop(int af, const void *src, char *dst, socklen_t size);
 
 #define   PORTNUM  13000   /* our time service phone number */
 #define   HOSTLEN  256
