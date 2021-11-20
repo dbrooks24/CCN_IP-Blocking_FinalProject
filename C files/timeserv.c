@@ -100,7 +100,7 @@ int main(int ac, char *av[])
 void printIP(struct sockaddr_in *SockStruct) //def of print function - Added by DBrooks
 {
 	char IPAddrBuffer[INET_ADDRSTRLEN];
-	inet_ntop(AF_INET, &SockStruct.sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
+	inet_ntop(AF_INET, SockStruct->sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
 		
 	uint16_t port = htons(SockStruct->sin_port);
 
