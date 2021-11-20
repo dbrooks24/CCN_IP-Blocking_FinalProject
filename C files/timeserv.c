@@ -38,7 +38,7 @@ int main(int ac, char *av[])
 		sock_id = socket( PF_INET, SOCK_STREAM, 0 );    /* get a socket */
 		if ( sock_id == -1 ) 
 			oops( "socket" );
-	printf("Step 1 ended...\n"); // - added by DBrooks
+	printf("Step 1 ended...\n\n"); // - added by DBrooks
 
 
 	/*
@@ -57,13 +57,13 @@ int main(int ac, char *av[])
 	
 		/*print out sockaddr(saddr) - added by DBrooks*/
 			inet_ntop(AF_INET, &saddr.sin_addr, sockAddrBuffer, sizeof(sockAddrBuffer));
-			printf("Socket info %s",sockAddrBuffer);
+			printf("\tIP info %s",sockAddrBuffer);
 			printf("\n");
 
 		if ( bind(sock_id, (struct sockaddr *)&saddr, sizeof(saddr)) != 0 )
 	    	   oops( "bind" );
 		printf("socket binded, assigned name to socket using sys call\n"); // - added by DBrooks
-	printf("Step 2 ended...\n"); // - added by DBrooks
+	printf("Step 2 ended...\n\n"); // - added by DBrooks
 
     
 	/*
@@ -73,13 +73,12 @@ int main(int ac, char *av[])
 		if ( listen(sock_id, 1) != 0 ) 
 			oops( "listen" );
 	printf("Step 3 ended...\n"); // - added by DBrooks
-	printf("1Server is now listening on socket...\n"); // - added by DBrooks
+	printf("\tServer is now listening on socket...\n"); // - added by DBrooks
 
 	/*
 	* main loop: accept(), write(), close()
 	*/
-	printf("2Server is now listening on socket...\n"); // - added by DBrooks
-
+	printf("\tNow entering accept loop...\n"); //added by DBrooks
 	while ( 1 )
 	{
 	    sock_fd = accept(sock_id, NULL, NULL); /* wait for call */
