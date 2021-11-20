@@ -19,7 +19,7 @@
 #define   HOSTLEN  256
 #define   oops(msg)      { perror(msg) ; exit(1) ; }
 
-void printIP(struct sockaddr_in &SockStruct); // helper function to print server address and port - Added by DBrooks
+void printIP(struct sockaddr_in *SockStruct); // helper function to print server address and port - Added by DBrooks
 
 int main(int ac, char *av[])
 {
@@ -70,7 +70,7 @@ int main(int ac, char *av[])
 	printf("Step 3 ended...\n"); // - added by DBrooks
 	printf("\tServer is now listening on socket...\n"); // - added by DBrooks
 
-	printIP(saddr); //print host info using helper function - added by DBrooks
+	printIP(&saddr); //print host info using helper function - added by DBrooks
 	
 
 	/*
@@ -97,10 +97,10 @@ int main(int ac, char *av[])
 };
 
 
-void printIP(struct sockaddr_in &SockStruct) //def of print function - Added by DBrooks
+void printIP(struct sockaddr_in *SockStruct) //def of print function - Added by DBrooks
 {
 	char IPAddrBuffer[INET_ADDRSTRLEN];
-	inet_ntop(AF_INET, &SockStruct.sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
+	inet_ntop(AF_INET, SockStruct->sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
 		
 	uint16_t port = htons(SockStruct->sin_port);
 
