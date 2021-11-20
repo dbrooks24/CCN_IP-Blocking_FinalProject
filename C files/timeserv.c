@@ -18,7 +18,7 @@
 int main(int ac, char *av[])
 {
 	struct  sockaddr_in   saddr;   /* build our address here */
-	char sockAddrBuffer[INET_ADDSTRLEN]; // - added by DBrooks
+	char sockAddrBuffer[INET_ADDRSTRLEN]; // - added by DBrooks
 	
 	struct	hostent		*hp;   /* this is part of our    */
 	char	hostname[HOSTLEN];     /* address 	         */
