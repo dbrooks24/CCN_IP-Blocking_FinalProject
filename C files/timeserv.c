@@ -19,7 +19,7 @@
 #define   HOSTLEN  256
 #define   oops(msg)      { perror(msg) ; exit(1) ; }
 
-void printIP(struct sockaddr_in *SockStruct); // helper function to print server address and port - Added by DBrooks
+void printIP(struct sockaddr_in *SockStruct); // helper function declaration to print server address and port - Added by DBrooks
 
 int main(int ac, char *av[])
 {
@@ -30,6 +30,10 @@ int main(int ac, char *av[])
 	FILE	*sock_fp;              /* use socket as stream   */
 	char    *ctime();              /* convert secs to string */
 	time_t  thetime;               /* the time we report     */
+
+	
+	printf("\nTime Server starting up...\n"); // - Added by DBrooks
+
 
 	/*
 	* Step 1: ask kernel for a socket
@@ -67,8 +71,8 @@ int main(int ac, char *av[])
 	printf("Step 3 started...\n"); // - added by DBrooks
 		if ( listen(sock_id, 1) != 0 ) 
 			oops( "listen" );
-	printf("Step 3 ended...\n"); // - added by DBrooks
-	printf("\tServer is now listening on socket...\n"); // - added by DBrooks
+	printf("Step 3 ended...\n\n"); // - added by DBrooks
+
 
 	printIP(&saddr); //print host info using helper function - added by DBrooks
 	
@@ -76,7 +80,7 @@ int main(int ac, char *av[])
 	/*
 	* main loop: accept(), write(), close()
 	*/
-	printf("\tNow entering accept loop...\n"); //added by DBrooks
+	printf("Server is now listening on socket/port...\n"); // - added by DBrooks
 	while ( 1 )
 	{
 	    sock_fd = accept(sock_id, NULL, NULL); /* wait for call */
@@ -96,6 +100,7 @@ int main(int ac, char *av[])
 	}
 };
 
+//helper functions:
 
 void printIP(struct sockaddr_in *SockStruct) //def of print function - Added by DBrooks
 {
@@ -104,5 +109,5 @@ void printIP(struct sockaddr_in *SockStruct) //def of print function - Added by 
 		
 	uint16_t port = htons(SockStruct->sin_port);
 
-	printf("SERVER INFO: %s:%d\n\n",IPAddrBuffer,port);
+	printf("\nSERVER INFO: %s:%d\n\n",IPAddrBuffer,port);
 };
