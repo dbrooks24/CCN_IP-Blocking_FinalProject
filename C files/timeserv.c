@@ -96,8 +96,10 @@ int main(int ac, char *av[])
       //boolean of comparison of client ip and the string are checked
       result = strcmp(str1, inet_ntoa(clientAddr.sin_addr));
       //if boolean true we print to show it works
-      if(result == 0)
-        printf("Ip matches what we want");
+      if(result != 0){
+        printf("Ip is not allowed");
+	break; //exits while loop so it doesnt open the socket
+      }
       //prints client ip
       printf("IP address is: %s\n", inet_ntoa(clientAddr.sin_addr));
       //uses printIp to print client ip
