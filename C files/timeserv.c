@@ -147,6 +147,9 @@ void printNetworkInfo(struct sockaddr_in *SockStruct, char *Type) // - DBrooks
 
 bool isAllowedToConnect(char *ClientIP) // - DBrooks
 {
+
+	printf("Checking file to see if %s is allowed...\n",ClientIP);
+
 	bool result;
 	FILE *FilePointer; 
 	int BufferSize = sizeof(*ClientIP);
