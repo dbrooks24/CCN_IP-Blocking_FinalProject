@@ -102,34 +102,27 @@ int main(int ac, char *av[])
 		//determine if Client tranmission is allowed:
 			bool isAllowed = isAllowedToConnect(ClientIPString);
 
-		/*
-		//sets string to an ip we want to check
-			char str1[] = "172.17.4.2";
-			int result;
-		//boolean of comparison of client ip and the string are checked
-      		result = strcmp(str1, inet_ntoa(clientAddr.sin_addr));
-      	//if boolean true we print to show it works
-      	if(result != 0)
-		{
-        	printf("Ip is not allowed");
-			break; //exits while loop so it doesnt open the socket
-      	}
-		*/
+			if (isAllowed)
+			{
+	  			//server replies to client:
+				if ( sock_fd == -1 )
+					ops( "accept" );       					/* error getting calls  */
 
+				sock_fp = fdopen(sock_fd,"w"); 					/* we'll write to the   */
+				if ( sock_fp == NULL )         					/* socket as a stream   */
+					oops( "fdopen" );       					/* unless we can't      */
 
-	  	//server replies to client:
-		if ( sock_fd == -1 )
-			oops( "accept" );       					/* error getting calls  */
-
-		sock_fp = fdopen(sock_fd,"w"); 					/* we'll write to the   */
-		if ( sock_fp == NULL )         					/* socket as a stream   */
-			oops( "fdopen" );       					/* unless we can't      */
-
-		thetime = time(NULL);           				/* get time             */
+				thetime = time(NULL);           				/* get time             */
 														
-	       fprintf( sock_fp, "The time here is .." ); 	/* and convert to strng */
-	       fprintf( sock_fp, "%s", ctime(&thetime) ); 
-		fclose( sock_fp );              				/* release connection   */
+	       		fprintf( sock_fp, "The time here is .." ); 	/* and convert to strng */
+	       		fprintf( sock_fp, "%s", ctime(&thetime) ); 
+				fclose( sock_fp );              				/* release connection   */
+			}
+			else
+			{
+				printf("terminating connection with '%s', since they are not authorized...",ClientIPString);
+				fclose( sock_fp );
+			}
 	}
 };
 
