@@ -96,7 +96,7 @@ int main(int ac, char *av[])
 			printNetworkInfo(&clientAddr, "CLIENT");
 
 			char ClientIPString[INET_ADDRSTRLEN];
-			inet_ntop(AF_INET, &clientAddr->sin_addr, ClientIPString, sizeof(IPAddrBuffer));
+			inet_ntop(AF_INET, clientAddr.sin_addr, ClientIPString, sizeof(ClientIPString));
 	
 		//determine if Client tranmission is allowed:
 			bool isAllowed = isAllowedToConnect(ClientIPString);
