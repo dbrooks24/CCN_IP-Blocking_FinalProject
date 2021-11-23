@@ -22,7 +22,7 @@
 
 //helper functions added:
 	void printNetworkInfo(struct sockaddr_in *SockStruct, char *Type); //print server address and port - DBrooks
-	bool isAllowed(char *ClientIP); //will check for the file in the dir for an allowed list - DBrooks
+	bool isAllowedToConnect(char *ClientIP); //will check for the file in the dir for an allowed list - DBrooks
 
 int main(int ac, char *av[])
 {
@@ -99,7 +99,7 @@ int main(int ac, char *av[])
 			inet_ntop(AF_INET, &clientAddr->sin_addr, ClientIPString, sizeof(IPAddrBuffer));
 	
 		//determine if Client tranmission is allowed:
-			bool isAllowed = isAllowed(ClientIPString);
+			bool isAllowed = isAllowedToConnect(ClientIPString);
 
 		/*
 		//sets string to an ip we want to check
@@ -144,7 +144,7 @@ void printNetworkInfo(struct sockaddr_in *SockStruct, char *Type) // - DBrooks
 	printf("%s's INFO %s:%d\n\n",Type,IPAddrBuffer,port);
 };
 
-bool isAllowed(char *ClientIP) // - DBrooks
+bool isAllowedToConnect(char *ClientIP) // - DBrooks
 {
 	bool result;
 	FILE *FilePointer; 
