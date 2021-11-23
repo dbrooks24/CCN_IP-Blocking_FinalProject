@@ -153,9 +153,11 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 
 	bool result;
 	FILE *FilePointer; 
-	char Buffer[INET_ADDRSTRLEN];
+	int BufferSize = 256;
+	char Buffer[BufferSize];
+	
 
-	printf("BufferSize = %i\n", INET_ADDRSTRLEN);
+	printf("BufferSize = %i\n", BufferSize);
 
 	if((FilePointer = fopen("AllowedList.txt","r")) == NULL)
 	{
@@ -163,7 +165,7 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 		exit(-1);
 	}
 
-	while((fgets(Buffer, INET_ADDRSTRLEN, FilePointer) != NULL))
+	while((fgets(Buffer, BufferSize, FilePointer) != NULL))
 	{
 		//puts(Buffer);
 		//printf("FilePointer: %p", FilePointer);
