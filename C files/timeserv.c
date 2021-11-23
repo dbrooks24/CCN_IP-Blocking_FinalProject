@@ -10,26 +10,28 @@
 #include  <time.h>
 #include  <strings.h>
 
-#define _OPEN_SYS_SOCK_IPV6
-#include <arpa/inet.h>
-
-
+//added for IP string conversion and lookup: - DBrooks
+	#define _OPEN_SYS_SOCK_IPV6
+	#include <arpa/inet.h>
+	#include <string.h>
 
 #define   PORTNUM  13000   /* our time service phone number */
 #define   HOSTLEN  256
 #define   oops(msg)      { perror(msg) ; exit(1) ; }
 
-void printIP(struct sockaddr_in *SockStruct); // helper function declaration to print server address and port - Added by DBrooks
+//helper functions added:
+	void printIP(struct sockaddr_in *SockStruct); //print server address and port - DBrooks
+	bool isAllowed(char *ClientIP); //will check for the file in the dir for an allowed list - DBrooks
 
 int main(int ac, char *av[])
 {
-	struct  sockaddr_in   saddr;   /* build our address here */	
-	struct	hostent		*hp;   /* this is part of our    */
-	char	hostname[HOSTLEN];     /* address 	         */
-	int	sock_id,sock_fd;       /* line id, file desc     */
-	FILE	*sock_fp;              /* use socket as stream   */
-	char    *ctime();              /* convert secs to string */
-	time_t  thetime;               /* the time we report     */
+	struct  sockaddr_in   saddr;   	/* build our address here */	
+	struct	hostent		*hp;   		/* this is part of our    */
+	char	hostname[HOSTLEN];     	/* address 	         */
+	int		sock_id,sock_fd;       		/* line id, file desc     */
+	FILE	*sock_fp;              	/* use socket as stream   */
+	char    *ctime();              	/* convert secs to string */
+	time_t  thetime;               	/* the time we report     */
 
 	
 	printf("\nServer code for timerServer C.N.N. Project:\n");
@@ -83,29 +85,33 @@ int main(int ac, char *av[])
 	printf("Server is now listening on socket/port...\n"); // - added by DBrooks
 	while ( 1 )
 	{
-	    // code added by Brandon
-      //client struct created
-      struct sockaddr_in clientAddr;
-      socklen_t slen = sizeof(clientAddr);
-      // accept now pushes the client information into a new struct
-      sock_fd = accept(sock_id, (struct sockaddr *)&clientAddr, &slen);
-      printf("Wow! got a call!\n");
-      //sets string to an ip we want to check
-      char str1[] = "172.17.4.2";
-      int result;
-      //boolean of comparison of client ip and the string are checked
-      result = strcmp(str1, inet_ntoa(clientAddr.sin_addr));
-      //if boolean true we print to show it works
-      if(result != 0){
-        printf("Ip is not allowed");
-	break; //exits while loop so it doesnt open the socket
-      }
-      //prints client ip
-      printf("IP address is: %s\n", inet_ntoa(clientAddr.sin_addr));
-      //uses printIp to print client ip
-      printIP(&clientAddr);
-      // code above added by Brandon
-		printf("Wow! got a call!\n");
+		//accept code edited by Brandon
+		//client struct created
+			struct sockaddr_in clientAddr;
+			socklen_t slen = sizeof(clientAddr);
+		// accept now pushes the client information into a new struct
+			sock_fd = accept(sock_id, (struct sockaddr *)&clientAddr, &slen);
+			printf("Wow! got a call!\n");
+      
+		//sets string to an ip we want to check
+			char str1[] = "172.17.4.2";
+			int result;
+		//boolean of comparison of client ip and the string are checked
+      		result = strcmp(str1, inet_ntoa(clientAddr.sin_addr));
+      	//if boolean true we print to show it works
+      	if(result != 0)
+		{
+        	printf("Ip is not allowed");
+			break; //exits while loop so it doesnt open the socket
+      	}
+
+		//added by Brandon:
+      	//prints client ip
+      		printf("IP address of client is: %s\n", inet_ntoa(clientAddr.sin_addr));
+      	//uses printIp to print client ip
+			printIP(&clientAddr);
+      
+	  	//server replies to client:
 		if ( sock_fd == -1 )
 			oops( "accept" );       /* error getting calls  */
 
@@ -123,7 +129,7 @@ int main(int ac, char *av[])
 
 //helper functions:
 
-void printIP(struct sockaddr_in *SockStruct) //def of print function - Added by DBrooks
+void printIP(struct sockaddr_in *SockStruct) // - DBrooks
 {
 	char IPAddrBuffer[INET_ADDRSTRLEN];
 	inet_ntop(AF_INET, &SockStruct->sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
@@ -131,4 +137,30 @@ void printIP(struct sockaddr_in *SockStruct) //def of print function - Added by 
 	uint16_t port = htons(SockStruct->sin_port);
 
 	printf("\nSERVER INFO: %s:%d\n\n",IPAddrBuffer,port);
+};
+
+bool isAllowed(char *ClientIP) // - DBrooks
+{
+	bool result;
+	FILE *FilePointer; 
+	int BufferSize = sizeof(*ClientIP);
+	char Buffer[BufferSize];
+
+	if((FilerPointer = fopen("AllowedList.txt","r")) == NULL)
+	{
+		printf("ERROR, could not open allow file... terminating\n");
+		exit(-1);
+	}
+
+	while(fgets(Buffer, BufferSize, FilePointer) != NULL)
+	{
+		if(strstr(Buffer, ClientIP) != NULL)
+		{
+			printf("Client IP is allowed to connect...\n");
+			return(true);
+		}
+		
+	}
+	
+	return false;
 };
