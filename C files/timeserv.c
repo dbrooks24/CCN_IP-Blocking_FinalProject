@@ -103,7 +103,7 @@ int main(int ac, char *av[])
 			bool isAllowed = isAllowedToConnect(ClientIPString);
 			printf("Out of Allowed function.\n");
 
-			if (isAllowed)
+			if (isAllowed == true)
 			{
 	  			//server replies to client:
 				if ( sock_fd == -1 )
