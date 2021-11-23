@@ -83,7 +83,28 @@ int main(int ac, char *av[])
 	printf("Server is now listening on socket/port...\n"); // - added by DBrooks
 	while ( 1 )
 	{
-	    sock_fd = accept(sock_id, NULL, NULL); /* wait for call */
+	    // code added by Brandon
+      //client struct created
+      struct sockaddr_in clientAddr;
+      socklen_t slen = sizeof(clientAddr);
+      // accept now pushes the client information into a new struct
+      sock_fd = accept(sock_id, (struct sockaddr *)&clientAddr, &slen);
+      printf("Wow! got a call!\n");
+      //sets string to an ip we want to check
+      char str1[] = "172.17.4.2";
+      int result;
+      //boolean of comparison of client ip and the string are checked
+      result = strcmp(str1, inet_ntoa(clientAddr.sin_addr));
+      //if boolean true we print to show it works
+      if(result != 0){
+        printf("Ip is not allowed");
+	break; //exits while loop so it doesnt open the socket
+      }
+      //prints client ip
+      printf("IP address is: %s\n", inet_ntoa(clientAddr.sin_addr));
+      //uses printIp to print client ip
+      printIP(&clientAddr);
+      // code above added by Brandon
 		printf("Wow! got a call!\n");
 		if ( sock_fd == -1 )
 			oops( "accept" );       /* error getting calls  */
