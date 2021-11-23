@@ -126,7 +126,7 @@ int main(int ac, char *av[])
 			}
 			else
 			{
-				printf("terminating connection with '%s', since they are not authorized...",ClientIPString);
+				//printf("terminating connection with '%s', since they are not authorized...",ClientIPString);
 				fclose( sock_fp );
 			}
 	}
