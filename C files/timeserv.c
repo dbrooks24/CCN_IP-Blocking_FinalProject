@@ -148,14 +148,15 @@ void printNetworkInfo(struct sockaddr_in *SockStruct, char *Type) // - DBrooks
 bool isAllowedToConnect(char *ClientIP) // - DBrooks
 {
 
-	printf("Checking file to see if '%s' is allowed...\n",ClientIP);
+	//printf("IP to check '%s'\n",ClientIP);
+	printf("Checking file to see if client is allowed to connect fully...\n");
 
 	bool result;
 	FILE *FilePointer; 
 	int BufferSize = sizeof(ClientIP);
 	char Buffer[BufferSize];
 
-	printf("BufferSize = %i\n", BufferSize);
+	//printf("BufferSize = %i\n", BufferSize);
 
 	if((FilePointer = fopen("AllowedList.txt","r")) == NULL)
 	{
@@ -167,12 +168,12 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 	{
 		//puts(Buffer);
 		//printf("FilePointer: %p", FilePointer);
-		printf("Client IP is NOT allowed to connect...\n");
+		printf("-> Client IP is NOT allowed to connect...\n");
 		fclose(FilePointer);
 		return true;
 	}
 
-	printf("Client IP is NOT allowed to connect...\n");
+	printf("-> Client IP is NOT allowed to connect...\n");
 	fclose(FilePointer);
 	return false;
 };
