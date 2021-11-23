@@ -156,7 +156,7 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 	int BufferSize = sizeof(ClientIP);
 	char Buffer[BufferSize];
 
-	//printf("BufferSize = %i\n", BufferSize);
+	printf("BufferSize = %i\n", BufferSize);
 
 	if((FilePointer = fopen("AllowedList.txt","r")) == NULL)
 	{
