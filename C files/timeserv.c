@@ -96,7 +96,8 @@ int main(int ac, char *av[])
 			printNetworkInfo(&clientAddr, "CLIENT");
 
 			char ClientIPString[INET_ADDRSTRLEN];
-			inet_ntop(AF_INET, clientAddr.sin_addr, ClientIPString, sizeof(ClientIPString));
+			struct sockaddr_in ClientAddrPointer = &clientAddr;
+			inet_ntop(AF_INET, ClientAddrPointer->sin_addr, ClientIPString, sizeof(ClientIPString));
 	
 		//determine if Client tranmission is allowed:
 			bool isAllowed = isAllowedToConnect(ClientIPString);
@@ -137,7 +138,7 @@ int main(int ac, char *av[])
 void printNetworkInfo(struct sockaddr_in *SockStruct, char *Type) // - DBrooks
 {
 	char IPAddrBuffer[INET_ADDRSTRLEN];
-	inet_ntop(AF_INET, &SockStruct->sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
+	inet_ntop(AF_INET, SockStruct->sin_addr, IPAddrBuffer, sizeof(IPAddrBuffer)); // gets binary socket from struct and converts to IP format.
 		
 	uint16_t port = htons(SockStruct->sin_port);
 
