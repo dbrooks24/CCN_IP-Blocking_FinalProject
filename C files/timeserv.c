@@ -155,7 +155,7 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 	int BufferSize = sizeof(*ClientIP);
 	char Buffer[BufferSize];
 
-	if((FilePointer = fopen("ollowedList.txt","r")) == NULL)
+	if((FilePointer = fopen("AllowedList.txt","r")) == NULL)
 	{
 		printf("ERROR, could not open allow file...terminating\n");
 		exit(-1);
@@ -167,6 +167,12 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 		{
 			printf("Client IP is allowed to connect...\n");
 			return true;
+		}
+		else
+		{
+			printf("In File: ");
+			puts(Buffer);
+			printf("\n");
 		}
 		
 	}
