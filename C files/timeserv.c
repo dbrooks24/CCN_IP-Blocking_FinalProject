@@ -102,28 +102,8 @@ int main(int ac, char *av[])
 		//determine if Client tranmission is allowed:
 			bool isAllowed = isAllowedToConnect(ClientIPString);
 			printf("Out of Allowed function.\n");
+		
 
-			if (isAllowed == true)
-			{
-	  			//server replies to client:
-				if ( sock_fd == -1 )
-					oops( "accept" );       					/* error getting calls  */
-
-				sock_fp = fdopen(sock_fd,"w"); 					/* we'll write to the   */
-				if ( sock_fp == NULL )         					/* socket as a stream   */
-					oops( "fdopen" );       					/* unless we can't      */
-
-				thetime = time(NULL);           				/* get time             */
-														
-	       		fprintf( sock_fp, "The time here is .." ); 	/* and convert to strng */
-	       		fprintf( sock_fp, "%s", ctime(&thetime) ); 
-				fclose( sock_fp );              				/* release connection   */
-			}
-			else
-			{
-				//printf("terminating connection with '%s', since they are not authorized...",ClientIPString);
-				fclose( sock_fp );
-			}
 	}
 };
 
