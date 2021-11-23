@@ -94,8 +94,13 @@ int main(int ac, char *av[])
 			sock_fd = accept(sock_id, (struct sockaddr *)&clientAddr, &slen);
 			printf("Wow! got a call!\n");
 			printNetworkInfo(&clientAddr, "CLIENT");
-			char *ClientIPString = inet_ntoa(clientAddr.sin_addr);
+
+			char ClientIPString[INET_ADDRSTRLEN];
+			inet_ntop(AF_INET, &clientAddr->sin_addr, ClientIPString, sizeof(IPAddrBuffer));
 	
+		//determine if Client tranmission is allowed:
+			bool isAllowed = isAllowed(ClientIPString);
+
 		/*
 		//sets string to an ip we want to check
 			char str1[] = "172.17.4.2";
@@ -136,7 +141,7 @@ void printNetworkInfo(struct sockaddr_in *SockStruct, char *Type) // - DBrooks
 		
 	uint16_t port = htons(SockStruct->sin_port);
 
-	printf("%s'S INFO %s:%d\n\n",Type,IPAddrBuffer,port);
+	printf("%s's INFO %s:%d\n\n",Type,IPAddrBuffer,port);
 };
 
 bool isAllowed(char *ClientIP) // - DBrooks
@@ -161,6 +166,7 @@ bool isAllowed(char *ClientIP) // - DBrooks
 		}
 		
 	}
-	
+
+	printf("Client IP is NOT allowed to connect...\n");
 	return false;
 };
