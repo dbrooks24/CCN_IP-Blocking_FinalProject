@@ -14,6 +14,7 @@
 	#define _OPEN_SYS_SOCK_IPV6
 	#include <arpa/inet.h>
 	#include <string.h>
+	#include <stdbool.h> 
 
 #define   PORTNUM  13000   /* our time service phone number */
 #define   HOSTLEN  256
@@ -146,9 +147,9 @@ bool isAllowed(char *ClientIP) // - DBrooks
 	int BufferSize = sizeof(*ClientIP);
 	char Buffer[BufferSize];
 
-	if((FilerPointer = fopen("AllowedList.txt","r")) == NULL)
+	if((FilePointer = fopen("AllowedList.txt","r")) == NULL)
 	{
-		printf("ERROR, could not open allow file... terminating\n");
+		printf("ERROR, could not open allow file...terminating\n");
 		exit(-1);
 	}
 
@@ -157,7 +158,7 @@ bool isAllowed(char *ClientIP) // - DBrooks
 		if(strstr(Buffer, ClientIP) != NULL)
 		{
 			printf("Client IP is allowed to connect...\n");
-			return(true);
+			return true;
 		}
 		
 	}
