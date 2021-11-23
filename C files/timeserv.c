@@ -161,7 +161,7 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 		exit(-1);
 	}
 
-	while(fgets(Buffer, BufferSize, FilePointer) != NULL)
+	while((fgets(Buffer, BufferSize, FilePointer) != NULL) && (!feof(FilePointer)))
 	{
 		if(strstr(Buffer, ClientIP) != NULL)
 		{
