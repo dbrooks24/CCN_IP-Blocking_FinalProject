@@ -102,7 +102,7 @@ int main(int ac, char *av[])
 	
 		//determine if Client tranmission is allowed:
 			bool isAllowed = isAllowedToConnect(ClientIPString);
-			printf("Out of Allowed function.\n");
+			//printf("Out of Allowed function.\n");
 		
 			if (isAllowed == true)
 			{
@@ -126,8 +126,8 @@ int main(int ac, char *av[])
 			}
 			else
 			{
-				//printf("terminating connection with '%s', since they are not authorized...",ClientIPString);
-				//fclose( sock_fp );
+				printf("terminating connection with '%s', since they are not authorized...",ClientIPString);
+				fclose( sock_fp );
 			}
 	}
 };
