@@ -101,6 +101,7 @@ int main(int ac, char *av[])
 	
 		//determine if Client tranmission is allowed:
 			bool isAllowed = isAllowedToConnect(ClientIPString);
+			printf("Out of Allowed function.\n");
 
 			if (isAllowed)
 			{
