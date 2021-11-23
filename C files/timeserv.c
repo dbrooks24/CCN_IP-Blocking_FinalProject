@@ -106,7 +106,7 @@ int main(int ac, char *av[])
 			{
 	  			//server replies to client:
 				if ( sock_fd == -1 )
-					ops( "accept" );       					/* error getting calls  */
+					oops( "accept" );       					/* error getting calls  */
 
 				sock_fp = fdopen(sock_fd,"w"); 					/* we'll write to the   */
 				if ( sock_fp == NULL )         					/* socket as a stream   */
