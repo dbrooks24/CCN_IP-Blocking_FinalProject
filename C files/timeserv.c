@@ -168,9 +168,12 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 	{
 		//puts(Buffer);
 		//printf("FilePointer: %p", FilePointer);
-		printf("-> Client IP is NOT allowed to connect...\n");
-		fclose(FilePointer);
-		return true;
+		if (strstr(Buffer, ClientIP) != NULL)
+		{
+			printf("-> Client IP is allowed to connect :) ...\n");
+			fclose(FilePointer);
+			return true;
+		}
 	}
 
 	printf("-> Client IP is NOT allowed to connect...\n");
