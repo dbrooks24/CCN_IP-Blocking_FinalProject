@@ -153,7 +153,7 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 
 	bool result;
 	FILE *FilePointer; 
-	int BufferSize = sizeof(ClientIP);
+	int BufferSize = sizeof(ClientIP) / sizeof(char);
 	char Buffer[BufferSize];
 
 	printf("BufferSize = %i\n", BufferSize);
