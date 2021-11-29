@@ -130,7 +130,7 @@ int main(int ac, char *av[])
 			else
 			{
 				printf("terminating connection with '%s', since they are not authorized...",ClientIPString);
-				fprintf( sock_fp, "ACCESS DENIED, your IP is not permitted...\n"); 
+				fprintf( sock_fp, "ACCESS DENIED, your IP is not permitted...\n");
 				fclose( sock_fp );
 			}
 	}
@@ -145,7 +145,7 @@ void printNetworkInfo(struct sockaddr_in *SockStruct, char *Type) // - DBrooks
 		
 	uint16_t port = htons(SockStruct->sin_port);
 
-	printf("%s's INFO %s:%d\n\n",Type,IPAddrBuffer,port);
+	printf("%s's INFO %s:%d\n",Type,IPAddrBuffer,port);
 };
 
 bool isAllowedToConnect(char *ClientIP) // - DBrooks
@@ -174,13 +174,13 @@ bool isAllowedToConnect(char *ClientIP) // - DBrooks
 		
 		if (strstr(Buffer, ClientIP) != NULL)
 		{
-			printf("-> Client IP is allowed to connect :) ...\n");
+			printf("-> Client IP is allowed to connect :) ...\n\n");
 			fclose(FilePointer);
 			return true;
 		}
 	}
 
-	printf("-> Client IP is NOT allowed to connect...\n");
+	printf("-> Client IP is NOT allowed to connect :( ...\n\n");
 	fclose(FilePointer);
 	return false;
 };
